@@ -57,39 +57,67 @@ function searchPlaces() {
 }
 
 // [7] 검색 결과 목록 및 마커 표시
-function displayPlaces(data) {
-    var listEl = document.getElementById('search-list');
-    listEl.innerHTML = ''; // 기존 리스트 초기화
+    function displayPlaces(data) {
+        var listEl = document.getElementById('search-list');
+        listEl.innerHTML = ''; // 기존 리스트 초기화 (이게 맞습니다 사장님!)
 
-    var bounds = new kakao.maps.LatLngBounds();
+        var bounds = new kakao.maps.LatLngBounds();
 
-    for (var i = 0; i < Math.min(data.length, 50); i++) {
-        var place = data[i];
-        var marker = displayMarker(place);
-        markers.push(marker);
-        bounds.extend(new kakao.maps.LatLng(place.y, place.x));
+        for (var i = 0; i < Math.min(data.length, 50); i++) {
+            var place = data[i];
+            
+            // 1. 마커 생성 및 지도 영역 확장
+            var marker = displayMarker(place);
+            markers.push(marker);
+            bounds.extend(new kakao.maps.LatLng(place.y, place.x));
 
-        // 리스트 아이템 생성
-        var itemEl = document.createElement('div');
-        itemEl.className = 'list-item';
-        itemEl.innerHTML = `
-            <div class="place-name">${place.place_name}</div>
-            <div class="place-info">${place.address_name}</div>
-            <div class="place-dist">${place.distance}m</div>
-        `;
+            // 2. 리스트 아이템 생성
+            var itemEl = document.createElement('div');
+            itemEl.className = 'list-item';
+            
+            // 거리 계산 (m -> km 변환)
+            var distance = place.distance ? (place.distance > 1000 ? (place.distance / 1000).toFixed(1) + 'km' : place.distance + 'm') : '';
 
-        // 리스트 클릭 시 지도 이동
-        (function(m, p) {
-            itemEl.onclick = function() {
-                map.panTo(new kakao.maps.LatLng(p.y, p.x));
-                infowindow.setContent('<div style="padding:5px;">' + p.place_name + '</div>');
-                infowindow.open(map, m);
-            };
-        })(marker, place);
+            // [핵심] 리스트에 식당 정보와 '카카오 내비' 버튼 넣기
+            itemEl.innerHTML = `
+                <div class="place-name">${place.place_name}</div>
+                <div class="place-info">${place.address_name}</div>
+                <div class="place-dist">거리: ${distance}</div>
+                <div style="margin-top:10px;">
+                    <button class="btn" style="background:#FEE500; color:#3C1E1E; width:100%;" 
+                            onclick="openWalkNav('${place.place_name}', '${place.y}', '${place.x}')">
+                        🚶 도보 길찾기 시작
+                    </button>
+                </div>
+            `;
 
-        listEl.appendChild(itemEl);
+            // 리스트 아이템 클릭 시 지도 이동 (클로저 처리)
+            (function(m, p) {
+                itemEl.addEventListener('click', function(e) {
+                    // 버튼을 눌렀을 때는 지도 이동 안 하게 방지 (선택 사항)
+                    if(e.target.tagName !== 'BUTTON') {
+                        map.panTo(new kakao.maps.LatLng(p.y, p.x));
+                        infowindow.setContent('<div style="padding:10px; font-size:12px;">' + p.place_name + '</div>');
+                        infowindow.open(map, m);
+                    }
+                });
+            })(marker, place);
+
+            listEl.appendChild(itemEl);
+        }
     }
-}
+
+        function openWalkNav(name, lat, lon) {
+            // 카카오맵 도보 길찾기 전용 URL 규격입니다.
+            // sName(출발지)을 비워두면 자동으로 '현재 위치'가 출발지가 됩니다. ⭐
+            const url = `https://map.kakao.com/link/to/${name},${lat},${lon}`;
+            
+            // 새 창으로 열기 (모바일에서는 카카오맵 앱이 설치되어 있으면 앱으로 연결됨)
+            window.open(url, '_blank');
+        }   
+
+
+
 
 // 마커 생성 함수
 function displayMarker(place) {
