@@ -1,0 +1,54 @@
+
+
+* { box-sizing: border-box; }
+body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; font-family: 'Pretendard', sans-serif; }
+
+.header { 
+    height: 70px; background: #333; display: flex; 
+    align-items: center; padding: 10px; gap: 8px;
+}
+
+input#keyword { 
+    flex: 1; height: 50px; padding: 0 15px; 
+    border-radius: 8px; border: none; font-size: 16px; 
+    background: #fff;
+}
+
+.btn { 
+    height: 50px; padding: 0 15px; border: none; 
+    border-radius: 8px; font-weight: bold; cursor: pointer; 
+    font-size: 14px; display: flex; align-items: center; justify-content: center;
+}
+
+.btn-search { background: #fee500; color: #3c1e1e; min-width: 60px; }
+.btn-myloc { background: #4285F4; color: white; min-width: 50px; font-size: 20px; }
+#kakao-login-btn { background: #fee500; color: #3c1e1e; min-width: 70px; }
+
+
+#map { width: 100%; height: 45vh; } 
+
+#search-list { 
+    width: 100%; height: calc(55vh - 70px); 
+    overflow-y: auto; background: #f8f9fa; 
+    -webkit-overflow-scrolling: touch; 
+}
+
+
+.list-item { 
+    padding: 16px; border-bottom: 1px solid #eee; background: white;
+    margin: 8px; border-radius: 12px; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.list-item:active { background-color: #f0f0f0; transform: scale(0.98); }
+
+.list-item .place-name { font-weight: bold; font-size: 18px; color: #222; margin-bottom: 4px; }
+.list-item .place-info { font-size: 14px; color: #666; line-height: 1.4; }
+.list-item .place-dist { font-size: 13px; color: #4285F4; font-weight: bold; margin-top: 5px; }
+
+
+#user-info { 
+    display: flex; flex-direction: column; align-items: center; 
+    color: white; font-size: 10px; min-width: 50px;
+}
+#user-info img { width: 30px; height: 30px; border-radius: 50%; border: 2px solid #fee500; }

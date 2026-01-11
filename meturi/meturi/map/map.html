@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <title>메추리 점심 추천 앱</title>
+        <link rel="stylesheet" href="map.css">
+        <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    </head>
+    <body>
+        <div class="header">
+            <button id="kakao-login-btn" class="btn" onclick="loginWithKakao()">로그인</button>
+            <div id="user-info" style="color: white; font-size: 12px; display: none;"></div>
+            <input type="text" id="keyword" placeholder="주변 맛집 검색" 
+                    onclick="checkLoginBeforeSearch()" 
+                    onkeypress="if(event.keyCode==13) searchPlaces()">
+            <button class="btn btn-search" onclick="searchPlaces()">검색</button>
+            <button class="btn btn-myloc" onclick="moveToCurrentLocation()">📍</button>
+        </div>
+        
+        <div id="map"></div>
+        <div id="search-list"><div style="padding:20px; color:#999; text-align:center;">맛집을 검색해 보세요! 🍱</div></div>
+
+        <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=f302e156db3af4813a64bcd68ed84749&libraries=services"></script>
+        <script src="map.js"></script>
+        
+
+    <script src="script.js"></script>
+    </body>
+</html>

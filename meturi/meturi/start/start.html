@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+    <html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>메추리 start!</title>
+        <script src="./start.js"></script>
+        <link rel="stylesheet" href="./start.css">
+    </head>
+    <body>
+            <div id="survey-layer">
+        <div class="survey-card active" id="q1">
+            <h2>Q1. 오늘 오전은 어떠셨나요? ☀️</h2>
+            <p>지금 미니추리님의 기분을 알려주세요!</p>
+            <button onclick="nextStep('q1', 'q2', '담백')">🧘 평온했다 (건강식)</button>
+            <button onclick="nextStep('q1', 'q2', '매운')">🔥 전쟁터였다 (스트레스 해소)</button>
+        </div>
+
+        <div class="survey-card" id="q2">
+            <h2>Q2. 누구와 함께하시나요? 👥</h2>
+            <button onclick="nextStep('q2', 'q3', '혼밥')">🙋 나 홀로 점심</button>
+            <button onclick="nextStep('q2', 'q3', '맛집')">👨‍💻 팀원들과 함께</button>
+        </div>
+
+        <div class="survey-card" id="q3">
+            <h2>Q3. 양은 어느 정도가 좋으세요? 🥘</h2>
+            <button onclick="finishSurvey('샐러드')">🥗 가볍게 채우고 싶어요</button>
+            <button onclick="finishSurvey('고기')">🥩 든든하게 먹고 싶어요</button>
+        </div>
+    </div>
+    </body>
+</html>
